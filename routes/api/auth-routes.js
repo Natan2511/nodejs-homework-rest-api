@@ -1,10 +1,10 @@
 const express = require("express");
 
-const { schemas } = require("../../models/users");
+const { schemas } = require("../../models/user");
 
 const { validateBody } = require("../../utils");
 const authControllers = require("../../controllers/auth-controllers");
-const { authenticate } = require("../../middlewars");
+const { authenticate, upload } = require("../../middlewars");
 const router = express.Router();
 
 router.post(
@@ -20,6 +20,12 @@ router.patch(
   authenticate,
   validateBody(schemas.updateSubscriptionSchema),
   authControllers.updateSubscription
+);
+router.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  authControllers.updateAvatar
 );
 
 module.exports = router;
