@@ -12,6 +12,14 @@ router.post(
   validateBody(schemas.registerSchema),
   authControllers.register
 );
+
+router.get("/verify/:verificationToken", authControllers.verify);
+router.post(
+  "/verify",
+  validateBody(schemas.emailSchema),
+  authControllers.resendVerifyEmail
+);
+
 router.post("/login", validateBody(schemas.loginSchema), authControllers.login);
 router.get("/current", authenticate, authControllers.getCurrent);
 router.post("/logout", authenticate, authControllers.logout);
